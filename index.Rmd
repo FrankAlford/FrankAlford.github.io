@@ -1,0 +1,10 @@
+---
+title: "Francis' website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
+---
+
+# This is Francis's awesome website
