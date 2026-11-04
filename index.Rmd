@@ -9,6 +9,8 @@ output:
 
 # Landing page
 
+Hi this is my website
+
 To learn about this page, go [here](about.html)
 
 <img src = "images/Francis_grad.jpg" style = "width:75%">
