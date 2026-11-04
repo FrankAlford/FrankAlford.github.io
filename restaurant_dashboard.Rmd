@@ -10,11 +10,24 @@ Here is my restaurant dashboard
 ```{r}
 library(tidyverse)
 library(p8105.datasets)
+library(plotly)
 data("rest_inspec")
 
 ```
+Column {data-width=350}
+-----------------------------------------------------------------------
 
+### Chart A
 ```{r}
-summary(rest_inspec)
+rest_inspec |>
+  filter(boro %in% c(
+    "Manhattan", "Brooklyn", "Queens",
+    "Bronx", "Staten Island"
+  )) |>
+  count(boro) |>
+  plot_ly(
+    x = ~boro,
+    y = ~ n,
+    type = "bar"
+)
 ```
-

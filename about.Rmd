@@ -7,10 +7,13 @@ output:
 ---
 
 
-<iframe src="images/FrancisAlford_Resume_102026.pdf" width="100%" height="800px" style="border: none;">
+<iframe 
+  src="images/FrancisAlford_Resume_102026.pdf" 
+  width="100%" 
+  height="800px" 
+  style="border: none;">
 </iframe>
 
-[View or Download My Resume](images/FrancisAlford_Resume_102026.pdf)
 
 To go home, click [here](index.html)
 
