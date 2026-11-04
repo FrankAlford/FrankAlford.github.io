@@ -7,13 +7,14 @@ output:
 ---
 Here is my restaurant dashboard
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
 data("rest_inspec")
 
 ```
+
 Column {data-width=350}
 -----------------------------------------------------------------------
 
