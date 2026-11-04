@@ -6,7 +6,10 @@ output:
     toc_float: true
 ---
 
+Welcome to my personal website!
 
-To see more about my experience, go [here](about.html)
+To see my experiences, go [here](about.html)
+
+To see my dashboard, go [here](restaurant_dashboard.html)
 
 <img src = "images/Francis_grad.jpg" style = "width:75%">
