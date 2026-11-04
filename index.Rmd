@@ -1,15 +1,12 @@
 ---
-title: "Francis' website"
+title: "Francis Watanabe Alford"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-# Landing page
 
-Hi this is my website
-
-To learn about this page, go [here](about.html)
+To see more about my experience, go [here](about.html)
 
 <img src = "images/Francis_grad.jpg" style = "width:75%">

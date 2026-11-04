@@ -1,0 +1,20 @@
+---
+title: "NYC Restaurants Dashboard"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+Here is my restaurant dashboard
+
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+data("rest_inspec")
+
+```
+
+```{r}
+summary(rest_inspec)
+```
+
