@@ -8,3 +8,5 @@ output:
 ---
 
 # This is Francis's awesome website
+
+To learn about this page, go [here](about.html)
