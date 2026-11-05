@@ -1,9 +1,9 @@
 ---
 title: "NYC Restaurants Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 Here is my restaurant dashboard
 
@@ -16,8 +16,7 @@ data("rest_inspec")
 ```
 
 
-First, I clean the data:
-```{r}
+```{r, message=FALSE}
 inspections =
   rest_inspec |>
   mutate(
@@ -34,6 +33,39 @@ inspections =
   ) |>
   arrange(desc(inspection_date)) |>
   distinct(camis, .keep_all = TRUE)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Restaurant Locations in Manhattan
+
+```{r}
+inspections |>
+  filter(
+    boro == "Manhattan",
+    !is.na(latitude),
+    !is.na(longitude),
+    latitude > 40, latitude < 41,
+    longitude > -75, longitude < -73
+  ) |>
+  slice_sample(n = 1500) |>
+  mutate(
+    text_label = str_c(
+      "Restaurant: ", dba,
+      "\nScore: ", score,
+      "\nGrade: ", grade
+    )
+  ) |>
+  plot_ly(
+    x = ~longitude,
+    y = ~latitude,
+    type = "scatter",
+    mode = "markers",
+    color = ~score,
+    text = ~text_label,
+    alpha = 0.5
+  )
 ```
 
 Column {data-width=350}
