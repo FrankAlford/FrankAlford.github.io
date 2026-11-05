@@ -371,23 +371,39 @@ div.tocify {
 library(p8105.datasets)
 library(plotly)
 data(&quot;rest_inspec&quot;)</code></pre>
+<p>First, I clean the data:</p>
+<pre class="r"><code>inspections =
+  rest_inspec |&gt;
+  mutate(
+    boro = str_to_title(boro),
+    score = as.numeric(score),
+    latitude = as.numeric(latitude),
+    longitude = as.numeric(longitude)
+  ) |&gt;
+  filter(
+    boro %in% c(&quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Queens&quot;,
+                &quot;Bronx&quot;, &quot;Staten Island&quot;),
+    !is.na(score),
+    grade %in% c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)
+  ) |&gt;
+  arrange(desc(inspection_date)) |&gt;
+  distinct(camis, .keep_all = TRUE)</code></pre>
 <div id="column" class="section level2" data-width="350">
 <h2>Column</h2>
-<div id="chart-a" class="section level3">
-<h3>Chart A</h3>
-<pre class="r"><code>rest_inspec |&gt;
-  filter(boro %in% c(
-    &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Queens&quot;,
-    &quot;Bronx&quot;, &quot;Staten Island&quot;
-  )) |&gt;
+<div id="number-of-restaurants-by-borough" class="section level3">
+<h3>Number of Restaurants by Borough</h3>
+<pre class="r"><code>inspections |&gt;
   count(boro) |&gt;
+  mutate(boro = fct_reorder(boro, n)) |&gt;
   plot_ly(
     x = ~boro,
-    y = ~ n,
-    type = &quot;bar&quot;
-)</code></pre>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-405f8113b467da1ec232" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-405f8113b467da1ec232">{"x":{"visdat":{"b8c8393020c3":["function () ","plotlyVisDat"]},"cur_data":"b8c8393020c3","attrs":{"b8c8393020c3":{"x":{},"y":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"boro","type":"category","categoryorder":"array","categoryarray":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"n"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[35850,99635,154297,90157,13076],"type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+    y = ~n,
+    color = ~boro,
+    type = &quot;bar&quot;,
+    colors = &quot;viridis&quot;
+  )</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-48ea018daa4a7dcba2c1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-48ea018daa4a7dcba2c1">{"x":{"visdat":{"cc9e494992b4":["function () ","plotlyVisDat"]},"cur_data":"cc9e494992b4","attrs":{"cc9e494992b4":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"boro","type":"category","categoryorder":"array","categoryarray":["Staten Island","Bronx","Queens","Brooklyn","Manhattan"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"n"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Staten Island"],"y":[907],"type":"bar","name":"Staten Island","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Bronx"],"y":[2269],"type":"bar","name":"Bronx","marker":{"color":"rgba(59,82,139,1)","line":{"color":"rgba(59,82,139,1)"}},"textfont":{"color":"rgba(59,82,139,1)"},"error_y":{"color":"rgba(59,82,139,1)"},"error_x":{"color":"rgba(59,82,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Queens"],"y":[5713],"type":"bar","name":"Queens","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"textfont":{"color":"rgba(33,144,141,1)"},"error_y":{"color":"rgba(33,144,141,1)"},"error_x":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Brooklyn"],"y":[6224],"type":"bar","name":"Brooklyn","marker":{"color":"rgba(93,200,99,1)","line":{"color":"rgba(93,200,99,1)"}},"textfont":{"color":"rgba(93,200,99,1)"},"error_y":{"color":"rgba(93,200,99,1)"},"error_x":{"color":"rgba(93,200,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Manhattan"],"y":[9875],"type":"bar","name":"Manhattan","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

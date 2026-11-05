@@ -15,20 +15,41 @@ data("rest_inspec")
 
 ```
 
+
+First, I clean the data:
+```{r}
+inspections =
+  rest_inspec |>
+  mutate(
+    boro = str_to_title(boro),
+    score = as.numeric(score),
+    latitude = as.numeric(latitude),
+    longitude = as.numeric(longitude)
+  ) |>
+  filter(
+    boro %in% c("Manhattan", "Brooklyn", "Queens",
+                "Bronx", "Staten Island"),
+    !is.na(score),
+    grade %in% c("A", "B", "C")
+  ) |>
+  arrange(desc(inspection_date)) |>
+  distinct(camis, .keep_all = TRUE)
+```
+
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart A
+### Number of Restaurants by Borough
+
 ```{r}
-rest_inspec |>
-  filter(boro %in% c(
-    "Manhattan", "Brooklyn", "Queens",
-    "Bronx", "Staten Island"
-  )) |>
+inspections |>
   count(boro) |>
+  mutate(boro = fct_reorder(boro, n)) |>
   plot_ly(
     x = ~boro,
-    y = ~ n,
-    type = "bar"
-)
+    y = ~n,
+    color = ~boro,
+    type = "bar",
+    colors = "viridis"
+  )
 ```
