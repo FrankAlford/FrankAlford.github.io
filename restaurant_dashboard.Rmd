@@ -53,3 +53,16 @@ inspections |>
     colors = "viridis"
   )
 ```
+
+### Inspection Scores by Borough
+
+```{r}
+inspections |>
+  mutate(boro = fct_reorder(boro, score)) |>
+  plot_ly(
+    y = ~score,
+    color = ~boro,
+    type = "box",
+    colors = "viridis"
+  )
+```
